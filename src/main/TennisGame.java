@@ -12,19 +12,17 @@ public class TennisGame {
     }
 
     public String getGameScore() {
-        if (getWinner() != null) return "Player " + getWinner().getName() +" " + Constants.WINS;
+        if (getWinner() != null) return "Player " + getWinner().getName() + " " + Constants.WINS;
         if (isDeuce()) return Constants.DEUCE;
         if (!hasAdvantage().isEmpty()) return hasAdvantage();
-        else return player1.getName() + " : " + getPointScore(player1) + ", " + player2.getName() + " : " +
-                getPointScore(player2);
+        else
+            return player1.getName() + " : " + getPointScore(player1) + ", " + player2.getName() + " : " + getPointScore(player2);
     }
 
 
     public Player getWinner() {
-        if ((player1.getScore() > 3 && player1.getScore() >= player2.getScore() + 2))
-            return player1;
-        if ((player2.getScore() > 3 && player2.getScore() >= player1.getScore() + 2))
-            return player2;
+        if ((player1.getScore() > 3 && player1.getScore() >= player2.getScore() + 2)) return player1;
+        if ((player2.getScore() > 3 && player2.getScore() >= player1.getScore() + 2)) return player2;
         return null;
     }
 
