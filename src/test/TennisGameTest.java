@@ -34,13 +34,6 @@ public class TennisGameTest {
     }
 
     @Test
-    void getGameScoreTestPlayer2IsLeading() {
-        player1.setScore(1);
-        player2.setScore(3);
-        assertEquals(tennisGame.getGameScore(), "Player 1 : 15, Player 2 : 40");
-    }
-
-    @Test
     void getGameScoreTestPlayer1Wins() {
         player1.setScore(5);
         player2.setScore(3);
@@ -48,10 +41,10 @@ public class TennisGameTest {
     }
 
     @Test
-    void getGameScoreTestPlayer2Wins() {
-        player1.setScore(4);
-        player2.setScore(6);
-        assertEquals(tennisGame.getGameScore(), "Player " + player2.getName() +" "+ Constants.WINS);
+    void getGameScoreTestPlayer2IsLeading() {
+        player1.setScore(1);
+        player2.setScore(3);
+        assertEquals(tennisGame.getGameScore(), "Player 1 : 15, Player 2 : 40");
     }
 
     @Test
@@ -69,10 +62,24 @@ public class TennisGameTest {
     }
 
     @Test
+    void getGameScoreTestDeuceAfterAdv() {
+        player1.setScore(4);
+        player2.setScore(4);
+        assertEquals(tennisGame.getGameScore(), Constants.DEUCE);
+    }
+
+    @Test
     void getGameScoreTestPlayer2Adv() {
         player1.setScore(4);
         player2.setScore(5);
         assertEquals(tennisGame.getGameScore(), Constants.ADVANTAGE + " " + player2.getName());
+    }
+
+    @Test
+    void getGameScoreTestPlayer2Wins() {
+        player1.setScore(4);
+        player2.setScore(6);
+        assertEquals(tennisGame.getGameScore(), "Player " + player2.getName() +" "+ Constants.WINS);
     }
 
     @Test
