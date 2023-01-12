@@ -1,10 +1,8 @@
 package main;
 
 public class Player {
-    private String name;
+    private final String name;
     private int score;
-
-    public Player(){}
 
     public Player(String name) {
         this.name = name;
@@ -13,10 +11,6 @@ public class Player {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getScore() {

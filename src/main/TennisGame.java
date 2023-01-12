@@ -1,17 +1,18 @@
 package main;
 
 import main.utils.Constants;
+import main.utils.ScoreValueException;
 
 public class TennisGame {
-    Player player1;
-    Player player2;
+    private final Player player1;
+    private final Player player2;
 
     public TennisGame(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
     }
 
-    public String getGameScore() {
+    public String getGameScore() throws ScoreValueException {
         if (getWinner() != null) return "Player " + getWinner().getName() + " " + Constants.WINS;
         if (isDeuce()) return Constants.DEUCE;
         if (!hasAdvantage().isEmpty()) return hasAdvantage();
@@ -38,14 +39,14 @@ public class TennisGame {
         else return "";
     }
 
-    public String getPointScore(Player player) {
+    public String getPointScore(Player player) throws ScoreValueException {
         int score = player.getScore();
         return switch (score) {
             case 0 -> "Love";
             case 1 -> "15";
             case 2 -> "30";
             case 3 -> "40";
-            default -> "ERROR";
+            default -> throw new ScoreValueException("Illegal Score Value for player:" + player.getName() + " score: " + player.getScore());
         };
     }
 }

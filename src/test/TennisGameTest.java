@@ -3,6 +3,7 @@ package test;
 import main.Player;
 import main.TennisGame;
 import main.utils.Constants;
+import main.utils.ScoreValueException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,64 +23,64 @@ public class TennisGameTest {
     }
 
     @Test
-    void getGameScoreTestDeuceZero() {
+    void getGameScoreTestDeuceZero() throws ScoreValueException {
         assertEquals(tennisGame.getGameScore(), "Player 1 : Love, Player 2 : Love");
     }
 
     @Test
-    void getGameScoreTestPlayer1IsLeading() {
+    void getGameScoreTestPlayer1IsLeading() throws ScoreValueException {
         player1.setScore(3);
         player2.setScore(0);
         assertEquals(tennisGame.getGameScore(), "Player 1 : 40, Player 2 : Love");
     }
 
     @Test
-    void getGameScoreTestPlayer1Wins() {
+    void getGameScoreTestPlayer1Wins() throws ScoreValueException {
         player1.setScore(5);
         player2.setScore(3);
-        assertEquals(tennisGame.getGameScore(), "Player " + player1.getName() +" "+ Constants.WINS);
+        assertEquals(tennisGame.getGameScore(), "Player " + player1.getName() + " " + Constants.WINS);
     }
 
     @Test
-    void getGameScoreTestPlayer2IsLeading() {
+    void getGameScoreTestPlayer2IsLeading() throws ScoreValueException {
         player1.setScore(1);
         player2.setScore(3);
         assertEquals(tennisGame.getGameScore(), "Player 1 : 15, Player 2 : 40");
     }
 
     @Test
-    void getGameScoreTestDeuce() {
+    void getGameScoreTestDeuce() throws ScoreValueException {
         player1.setScore(3);
         player2.setScore(3);
         assertEquals(tennisGame.getGameScore(), Constants.DEUCE);
     }
 
     @Test
-    void getGameScoreTestPlayer1Adv() {
+    void getGameScoreTestPlayer1Adv() throws ScoreValueException {
         player1.setScore(4);
         player2.setScore(3);
         assertEquals(tennisGame.getGameScore(), Constants.ADVANTAGE + " " + player1.getName());
     }
 
     @Test
-    void getGameScoreTestDeuceAfterAdv() {
+    void getGameScoreTestDeuceAfterAdv() throws ScoreValueException {
         player1.setScore(4);
         player2.setScore(4);
         assertEquals(tennisGame.getGameScore(), Constants.DEUCE);
     }
 
     @Test
-    void getGameScoreTestPlayer2Adv() {
+    void getGameScoreTestPlayer2Adv() throws ScoreValueException {
         player1.setScore(4);
         player2.setScore(5);
         assertEquals(tennisGame.getGameScore(), Constants.ADVANTAGE + " " + player2.getName());
     }
 
     @Test
-    void getGameScoreTestPlayer2Wins() {
+    void getGameScoreTestPlayer2Wins() throws ScoreValueException {
         player1.setScore(4);
         player2.setScore(6);
-        assertEquals(tennisGame.getGameScore(), "Player " + player2.getName() +" "+ Constants.WINS);
+        assertEquals(tennisGame.getGameScore(), "Player " + player2.getName() + " " + Constants.WINS);
     }
 
     @Test
@@ -100,14 +101,14 @@ public class TennisGameTest {
     void isAdvantagePlayer1() {
         player1.setScore(4);
         player2.setScore(3);
-        assertEquals(tennisGame.hasAdvantage(), Constants.ADVANTAGE + " " +player1.getName());
+        assertEquals(tennisGame.hasAdvantage(), Constants.ADVANTAGE + " " + player1.getName());
     }
 
     @Test
     void isAdvantagePlayer2() {
         player1.setScore(4);
         player2.setScore(5);
-        assertEquals(tennisGame.hasAdvantage(), Constants.ADVANTAGE + " " +player2.getName());
+        assertEquals(tennisGame.hasAdvantage(), Constants.ADVANTAGE + " " + player2.getName());
     }
 
     @Test
@@ -118,5 +119,17 @@ public class TennisGameTest {
         assertNotEquals(tennisGame.hasAdvantage(), player2.getName());
     }
 
+    @Test
+    void getGameScoreTestWrong() {
+        player1.setScore(-1);
+        player2.setScore(-1);
+        ScoreValueException thrown = assertThrows(
+                ScoreValueException.class,
+                () -> tennisGame.getPointScore(player1),
+                "Illegal Score Value for player:" + player1.getName() + " score: " + player1.getScore()
+        );
+
+        assertTrue(thrown.getMessage().contentEquals("Illegal Score Value for player:" + player1.getName() + " score: " + player1.getScore()));
+    }
 
 }
