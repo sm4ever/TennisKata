@@ -125,8 +125,8 @@ public class TennisGameTest {
         player2.setScore(-1);
         ScoreValueException thrown = assertThrows(
                 ScoreValueException.class,
-                () -> tennisGame.getPointScore(player1),
-                "Illegal Score Value for player:" + player1.getName() + " score: " + player1.getScore()
+                () -> tennisGame.getPointScore(player1)
+
         );
 
         assertTrue(thrown.getMessage().contentEquals("Illegal Score Value for player:" + player1.getName() + " score: " + player1.getScore()));
